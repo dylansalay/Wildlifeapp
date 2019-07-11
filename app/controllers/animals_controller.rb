@@ -8,11 +8,17 @@ class AnimalsController < ApplicationController
     def show
         @animals = Animal.find(params[:id])
         render json: @animals.to_json(:include => :sightings)
-
     end
 
     def create
-        Animal.create(animal_params)
+        @animals = Animal.create(animal_params)
+        if @animals[:common_name] == @animals[:latin_name]
+        render json: @animals.errors.full_messages
+        elsif @animals.valid?
+        render json:@animals
+        else
+        render json: @animals.errors.full_messages
+        end
     end
 
     def update

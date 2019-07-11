@@ -7,7 +7,11 @@ class SightingsController < ApplicationController
 
     def post
         @sightings = Sighting.where(date: params[:start_date]..params[:end_date])
+        if @sightings
         render json: @sightings.to_json(:include => :animal)
+        else
+        flash.now[:notice] = "There have been no sightings."
+        end
     end
 
     def index
@@ -21,7 +25,12 @@ class SightingsController < ApplicationController
     end
 
     def create
-        Sighting.create(sighting_params)
+        @sightings = Sighting.create(sighting_params)
+        if @sightings.valid?
+        render json:@sightings
+        else
+        render json: @sightings.errors.full_messages
+        end
     end
 
     def update

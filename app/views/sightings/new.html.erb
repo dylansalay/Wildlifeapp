@@ -1,8 +1,9 @@
 <h1> Dates </h1>
-<form action = '/submit_post' method="post">
+
+<%= form_tag submit_post_path do %>
     <label for="start_date"> Start Date</label>
-    <input id="start_date" type="text" name="sighting[start_date]">
+    <input id="start_date" type="text" name="sighting[start_date]<JSON field>">
     <label for="end_date"> End Date</label>
-    <input id="end_date" type="text" name="sighting[end_date]">
+    <input id="end_date" type="text" name="sighting[end_date]<JSON field>">
     <input type="submit" value="Submit Dates" />
-</form>
+<% end %>
